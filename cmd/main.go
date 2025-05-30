@@ -1,12 +1,18 @@
 package main
 
 import (
+	"diet-app-backend/db"
 	"diet-app-backend/handlers"
 	"diet-app-backend/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
+	if err := db.Connect(); err != nil {
+		panic("failed to connect database: " + err.Error())
+	}
+	
 	router := gin.Default()
 
 	// Middleware globali (sempre eseguiti)
@@ -21,9 +27,11 @@ func main() {
 	auth.Use(middleware.JWTMiddleware())
 	{
 		auth.GET("/patients", handlers.GetPatients)
-		auth.GET("/patient", handlers.GetPatientByID)
+		auth.GET("/patients/:id", handlers.GetPatientByID)
 		auth.POST("/patients", handlers.CreatePatient)
+		auth.PUT("/patients/:id", handlers.UpdatePatient)
+		auth.DELETE("/patients/:id", handlers.DeletePatient)
 	}
 
-	router.Run(":8082")
+	router.Run(":8080")
 }

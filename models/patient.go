@@ -1,6 +1,10 @@
 package models
 
+import "time"
+
 type Patient struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	Username  string    `json:"username"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
 }
