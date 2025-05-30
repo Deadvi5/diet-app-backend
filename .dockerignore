@@ -1,0 +1,15 @@
+# Ignora file binari locali
+bin/
+tmp/
+
+# Ignora file git
+.git/
+
+# File non necessari
+*.log
+Dockerfile
+docker-compose.yml
+
+# Ignora test e documentazione non essenziale
+test/
+docs/
