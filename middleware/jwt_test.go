@@ -10,6 +10,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+// jwtSecret is used to sign test tokens.
+var jwtSecret = []byte("test-secret")
+
 // helper to create a token for tests
 func createTestToken() (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
