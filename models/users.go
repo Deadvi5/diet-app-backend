@@ -1,5 +1,6 @@
 package models
 
+// swagger:model
 type User struct {
 	Username string
 	Password string

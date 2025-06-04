@@ -10,6 +10,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+// swagger:route POST /login auth login
+// Authenticate user and return JWT token.
+//
+// responses:
+//
+//	200: tokenResponse
 func Login(c *gin.Context) {
 	var credentials models.User
 	if err := c.ShouldBindJSON(&credentials); err != nil {

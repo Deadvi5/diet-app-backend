@@ -42,6 +42,10 @@ This will initialize or update the database schema to the latest version.
 migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5432/dietappdb?sslmode=disable" up
 ```
 
+## 📑 API Reference
+
+The OpenAPI specification generated from the handlers can be found at [`api/openapi.yaml`](api/openapi.yaml). The file is regenerated automatically whenever the Docker image is built (e.g. `docker compose up --build`).
+
 This will initialize or update the database schema to the latest version.
 
 ## Run the Go backend:

@@ -1,6 +1,6 @@
 module diet-app-backend
 
-go 1.24
+go 1.23
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect

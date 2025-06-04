@@ -9,7 +9,12 @@ import (
 	"net/http"
 )
 
-// Handler per recuperare lista pazienti
+// swagger:route GET /api/v1/patients patients getPatients
+// Returns all patients.
+//
+// responses:
+//
+//	200: patientsResponse
 func GetPatients(c *gin.Context) {
 	var patients []models.Patient
 	// Preload diets so they are available on the patient model
@@ -20,7 +25,12 @@ func GetPatients(c *gin.Context) {
 	c.JSON(http.StatusOK, patients)
 }
 
-// Handler per recuperare singolo paziente
+// swagger:route GET /api/v1/patients/{patientId} patients getPatientByID
+// Returns a patient by ID.
+//
+// responses:
+//
+//	200: patientResponse
 func GetPatientByID(c *gin.Context) {
 	id := c.Param("patientId")
 	var patient models.Patient
@@ -32,7 +42,12 @@ func GetPatientByID(c *gin.Context) {
 	c.JSON(http.StatusOK, patient)
 }
 
-// Handler per creare un paziente
+// swagger:route POST /api/v1/patients patients createPatient
+// Create a new patient.
+//
+// responses:
+//
+//	201: patientResponse
 func CreatePatient(c *gin.Context) {
 	var patient models.Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
@@ -46,7 +61,12 @@ func CreatePatient(c *gin.Context) {
 	c.JSON(http.StatusCreated, patient)
 }
 
-// Update (replace) a patient
+// swagger:route PUT /api/v1/patients/{patientId} patients updatePatient
+// Update an existing patient.
+//
+// responses:
+//
+//	200: patientResponse
 func UpdatePatient(c *gin.Context) {
 	id := c.Param("patientId")
 	var patient models.Patient
@@ -65,7 +85,12 @@ func UpdatePatient(c *gin.Context) {
 	c.JSON(http.StatusOK, patient)
 }
 
-// Delete a patient
+// swagger:route DELETE /api/v1/patients/{patientId} patients deletePatient
+// Delete a patient.
+//
+// responses:
+//
+//	204:
 func DeletePatient(c *gin.Context) {
 	id := c.Param("patientId")
 
