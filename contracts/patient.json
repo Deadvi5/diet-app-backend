@@ -1,0 +1,8 @@
+{
+  "consumer": {"name": "DietApp Frontend"},
+  "provider": {"name": "DietApp Backend"},
+  "interactions": [],
+  "metadata": {
+    "pactSpecification": {"version": "2.0.0"}
+  }
+}

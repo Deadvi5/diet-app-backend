@@ -42,6 +42,17 @@ This will initialize or update the database schema to the latest version.
 migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5432/dietappdb?sslmode=disable" up
 ```
 
+## 🧪 Consumer-Driven Contracts
+
+Pact files are stored in the `contracts/` directory. After writing your consumer tests with [pact-go](https://github.com/pact-foundation/pact-go), install the dependency and run the contract tests:
+
+```sh
+go get github.com/pact-foundation/pact-go/v2
+go test ./contracts -run TestPatientContract
+```
+
+Once generated, the patient contract can be retrieved from the running server at `GET /contracts/patient`.
+
 This will initialize or update the database schema to the latest version.
 
 ## Run the Go backend:

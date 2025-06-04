@@ -22,6 +22,9 @@ func main() {
 	// Rotta pubblica per il login
 	router.POST("/login", handlers.Login)
 
+	// Serve Pact contracts
+	router.GET("/contracts/patient", handlers.GetPactContract)
+
 	// Rotte protette da JWT middleware
 	auth := router.Group("/api/v1")
 	auth.Use(middleware.JWTMiddleware())
