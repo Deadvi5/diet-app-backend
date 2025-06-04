@@ -33,6 +33,17 @@ services:
     depends_on:
       - db
       - migrate
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    environment:
+      SWAGGER_JSON: /spec/openapi.yaml
+    volumes:
+      - ./api/openapi.yaml:/spec/openapi.yaml:ro
+    depends_on:
+      - app
 volumes:
   diet-db-data:
 
