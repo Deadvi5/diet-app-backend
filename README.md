@@ -46,6 +46,8 @@ This will initialize or update the database schema to the latest version.
 
 ## Run the Go backend:
 
+Make sure the `JWT_SECRET` environment variable is set before starting the server.
+
 ```sh
 go run cmd/main.go
 ```
