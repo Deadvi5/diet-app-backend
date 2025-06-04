@@ -13,8 +13,10 @@ RUN go mod download
 # Copia il resto del codice sorgente
 COPY . .
 
-# Compila l'applicazione
-RUN go build -o diet-app ./cmd/main.go
+# Installa la CLI di go-swagger e genera lo spec OpenAPI
+RUN go install github.com/go-swagger/go-swagger/cmd/swagger@latest && \
+    swagger generate spec -o api/openapi.yaml && \
+    go build -o diet-app ./cmd/main.go
 
 # Usa un'immagine minimale per il runtime
 FROM alpine:latest
@@ -22,8 +24,9 @@ FROM alpine:latest
 # Imposta directory di lavoro finale
 WORKDIR /app
 
-# Copia solo il binario compilato
+# Copia il binario compilato e lo spec OpenAPI
 COPY --from=builder /app/diet-app .
+COPY --from=builder /app/api/openapi.yaml ./api/openapi.yaml
 
 # Espone la porta su cui il backend ascolta (es. 8080)
 EXPOSE 8080

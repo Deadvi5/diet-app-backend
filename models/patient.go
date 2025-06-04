@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// swagger:model
 type Patient struct {
 	ID        uint      `gorm:"primaryKey" json:"id"`
 	Username  string    `json:"username"`

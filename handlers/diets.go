@@ -9,7 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetDiets retrieves all diets for a patient
+// swagger:route GET /api/v1/patients/{patientId}/diets diets getDiets
+// Retrieve all diets for a patient.
+//
+// responses:
+//
+//	200: dietsResponse
 func GetDiets(c *gin.Context) {
 	patientID := c.Param("patientId")
 	var diets []models.Diet
@@ -20,7 +25,12 @@ func GetDiets(c *gin.Context) {
 	c.JSON(http.StatusOK, diets)
 }
 
-// GetDietByID retrieves a specific diet for a patient
+// swagger:route GET /api/v1/patients/{patientId}/diets/{id} diets getDietByID
+// Retrieve a diet by ID.
+//
+// responses:
+//
+//	200: dietResponse
 func GetDietByID(c *gin.Context) {
 	id := c.Param("id")
 	patientID := c.Param("patientId")
@@ -32,7 +42,12 @@ func GetDietByID(c *gin.Context) {
 	c.JSON(http.StatusOK, diet)
 }
 
-// CreateDiet creates a new diet for a patient
+// swagger:route POST /api/v1/patients/{patientId}/diets diets createDiet
+// Create a new diet for a patient.
+//
+// responses:
+//
+//	201: dietResponse
 func CreateDiet(c *gin.Context) {
 	patientID := c.Param("patientId")
 	var diet models.Diet
@@ -48,7 +63,12 @@ func CreateDiet(c *gin.Context) {
 	c.JSON(http.StatusCreated, diet)
 }
 
-// UpdateDiet updates a diet for a patient
+// swagger:route PUT /api/v1/patients/{patientId}/diets/{id} diets updateDiet
+// Update an existing diet.
+//
+// responses:
+//
+//	200: dietResponse
 func UpdateDiet(c *gin.Context) {
 	id := c.Param("id")
 	patientID := c.Param("patientId")
@@ -68,7 +88,12 @@ func UpdateDiet(c *gin.Context) {
 	c.JSON(http.StatusOK, diet)
 }
 
-// DeleteDiet deletes a diet for a patient
+// swagger:route DELETE /api/v1/patients/{patientId}/diets/{id} diets deleteDiet
+// Delete a diet.
+//
+// responses:
+//
+//	204:
 func DeleteDiet(c *gin.Context) {
 	id := c.Param("id")
 	patientID := c.Param("patientId")
