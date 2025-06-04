@@ -21,7 +21,7 @@ func GetPatients(c *gin.Context) {
 
 // Handler per recuperare singolo paziente
 func GetPatientByID(c *gin.Context) {
-	id := c.Query("id")
+	id := c.Param("id")
 	var patient models.Patient
 	if err := db.DB.First(&patient, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
