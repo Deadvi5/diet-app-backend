@@ -42,6 +42,21 @@ This will initialize or update the database schema to the latest version.
 migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5432/dietappdb?sslmode=disable" up
 ```
 
+## 🔒 Authentication
+
+User credentials are now stored with Argon2 hashed passwords. Demo accounts are:
+
+- `dietista1` / `password123`
+- `dietista2` / `password456`
+
+## 🩺 Health Check
+
+To verify the service is running, call:
+
+```sh
+curl http://localhost:8080/healthz
+```
+
 This will initialize or update the database schema to the latest version.
 
 ## Run the Go backend:

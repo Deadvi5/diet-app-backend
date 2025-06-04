@@ -16,8 +16,11 @@ func main() {
 	router := gin.Default()
 
 	// Middleware globali (sempre eseguiti)
-	router.Use(middleware.CORSMiddleware())
-	router.Use(middleware.LoggingMiddleware())
+       router.Use(middleware.CORSMiddleware())
+       router.Use(middleware.LoggingMiddleware())
+
+       // Basic health check
+       router.GET("/healthz", handlers.HealthCheck)
 
 	// Rotta pubblica per il login
 	router.POST("/login", handlers.Login)

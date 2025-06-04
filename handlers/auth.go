@@ -17,11 +17,10 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	expectedPassword, exists := models.Users[credentials.Username]
-	if !exists || expectedPassword != credentials.Password {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
-		return
-	}
+       if !models.VerifyUser(credentials.Username, credentials.Password) {
+               c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
+               return
+       }
 
 	// Creazione del token JWT
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
