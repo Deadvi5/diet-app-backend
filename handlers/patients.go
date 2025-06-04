@@ -22,7 +22,7 @@ func GetPatients(c *gin.Context) {
 
 // Handler per recuperare singolo paziente
 func GetPatientByID(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("patientId")
 	var patient models.Patient
 	// Preload diets so the returned patient includes them
 	if err := db.DB.Preload("Diets").First(&patient, id).Error; err != nil {
@@ -48,7 +48,7 @@ func CreatePatient(c *gin.Context) {
 
 // Update (replace) a patient
 func UpdatePatient(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("patientId")
 	var patient models.Patient
 	if err := db.DB.First(&patient, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
@@ -67,7 +67,7 @@ func UpdatePatient(c *gin.Context) {
 
 // Delete a patient
 func DeletePatient(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("patientId")
 
 	var patient models.Patient
 	// First, check if the patient exists

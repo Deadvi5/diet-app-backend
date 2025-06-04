@@ -27,10 +27,10 @@ func main() {
 	auth.Use(middleware.JWTMiddleware())
 	{
 		auth.GET("/patients", handlers.GetPatients)
-		auth.GET("/patients/:id", handlers.GetPatientByID)
+		auth.GET("/patients/:patientId", handlers.GetPatientByID)
 		auth.POST("/patients", handlers.CreatePatient)
-		auth.PUT("/patients/:id", handlers.UpdatePatient)
-		auth.DELETE("/patients/:id", handlers.DeletePatient)
+		auth.PUT("/patients/:patientId", handlers.UpdatePatient)
+		auth.DELETE("/patients/:patientId", handlers.DeletePatient)
 
 		auth.GET("/patients/:patientId/diets", handlers.GetDiets)
 		auth.GET("/patients/:patientId/diets/:id", handlers.GetDietByID)
