@@ -12,7 +12,7 @@ func main() {
 	if err := db.Connect(); err != nil {
 		panic("failed to connect database: " + err.Error())
 	}
-	
+
 	router := gin.Default()
 
 	// Middleware globali (sempre eseguiti)
@@ -31,6 +31,12 @@ func main() {
 		auth.POST("/patients", handlers.CreatePatient)
 		auth.PUT("/patients/:id", handlers.UpdatePatient)
 		auth.DELETE("/patients/:id", handlers.DeletePatient)
+
+		auth.GET("/patients/:patientId/diets", handlers.GetDiets)
+		auth.GET("/patients/:patientId/diets/:id", handlers.GetDietByID)
+		auth.POST("/patients/:patientId/diets", handlers.CreateDiet)
+		auth.PUT("/patients/:patientId/diets/:id", handlers.UpdateDiet)
+		auth.DELETE("/patients/:patientId/diets/:id", handlers.DeleteDiet)
 	}
 
 	router.Run(":8080")
