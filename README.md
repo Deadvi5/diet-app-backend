@@ -44,9 +44,12 @@ migrate -path db/migrations -database "postgres://postgres:postgres@localhost:54
 
 ## 🧪 Consumer-Driven Contracts
 
-Pact files are stored in the `contracts/` directory. After writing your consumer tests with [pact-go](https://github.com/pact-foundation/pact-go), install the dependency and run the contract tests:
+Pact files are stored in the `contracts/` directory. After writing your consumer
+tests with [pact-go](https://github.com/pact-foundation/pact-go), install the
+CLI and the FFI library, then run the contract tests:
 
 ```sh
+pact-go install      # downloads the pact FFI library
 go get github.com/pact-foundation/pact-go/v2
 go test ./contracts -run TestPatientContract
 ```

@@ -40,5 +40,5 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
         gorm.io/driver/postgres v1.6.0 // indirect
         gorm.io/gorm v1.30.0 // indirect
-       github.com/pact-foundation/pact-go/v2 v2.0.0 // indirect
+       github.com/pact-foundation/pact-go/v2 v2.4.1 // indirect
 )

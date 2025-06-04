@@ -105,3 +105,5 @@ gorm.io/gorm v1.30.0 h1:qbT5aPv1UH8gI99OsRlvDToLxW5zR7FzS9acZDOZcgs=
 gorm.io/gorm v1.30.0/go.mod h1:8Z33v652h4//uMA76KjeDH8mJXPm1QNCYrMeatR0DOE=
 nullprogram.com/x/optparse v1.0.0/go.mod h1:KdyPE+Igbe0jQUrVfMqDMeJQIJZEuyV7pjYmp6pbG50=
 rsc.io/pdf v0.1.1/go.mod h1:n8OzWcQ6Sp37PL01nO98y4iUCRdTGarVfzxY20ICaU4=
+github.com/pact-foundation/pact-go/v2 v2.4.1 h1:eaLC58qzeCTbwdlCY8UvWz1HmDW+qrjTFfH8Xoq0rWs=
+github.com/pact-foundation/pact-go/v2 v2.4.1/go.mod h1:OwnXXRliPZvKDMJn/IsAwQ95tQprmp5gPTzPYz54mTg=
