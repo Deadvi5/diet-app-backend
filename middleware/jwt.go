@@ -5,11 +5,10 @@ import (
 	"net/http"
 	"strings"
 
+	"diet-app-backend/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
-
-var jwtSecret = []byte("C*Wz#As2p+E6r1vNfYqKjBmSuHqXpZoRvTgYhJuQmBrNvZkTpWqRzXnCgVmSjGfLt") // Assicurati che sia la stessa del login
 
 func JWTMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -31,7 +30,7 @@ func JWTMiddleware() gin.HandlerFunc {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, jwt.ErrSignatureInvalid
 			}
-			return jwtSecret, nil
+			return config.JWTSecret, nil
 		})
 
 		if err != nil || !token.Valid {

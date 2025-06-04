@@ -4,12 +4,11 @@ import (
 	"net/http"
 	"time"
 
+	"diet-app-backend/config"
 	"diet-app-backend/models"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
-
-var jwtSecret = []byte("C*Wz#As2p+E6r1vNfYqKjBmSuHqXpZoRvTgYhJuQmBrNvZkTpWqRzXnCgVmSjGfLt") //generate new and move to env
 
 func Login(c *gin.Context) {
 	var credentials models.User
@@ -30,7 +29,7 @@ func Login(c *gin.Context) {
 		"exp":      time.Now().Add(time.Hour * 1).Unix(),
 	})
 
-	tokenString, err := token.SignedString(jwtSecret)
+	tokenString, err := token.SignedString(config.JWTSecret)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Errore nella generazione del token"})
 		return
