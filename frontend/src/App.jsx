@@ -1,13 +1,27 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './AuthContext'
+import Login from './pages/Login'
+import Patients from './pages/Patients'
+import PatientDiets from './pages/PatientDiets'
+
 function App() {
   return (
-    <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center p-4">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">DietApp</h1>
-        <p className="mb-8">Gestisci facilmente i tuoi pazienti e le loro diete.</p>
-        <button className="btn btn-primary">Inizia</button>
-      </div>
-    </div>
-  );
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-base-200">
+          <header className="p-4 bg-base-100 shadow mb-4">
+            <h1 className="text-2xl font-bold">DietApp</h1>
+          </header>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/patients" element={<Patients />} />
+            <Route path="/patients/:id" element={<PatientDiets />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
+  )
 }
 
-export default App;
+export default App
