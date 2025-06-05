@@ -25,7 +25,15 @@ type patientParams struct {
 	PatientID uint `json:"patientId"`
 }
 
-// swagger:parameters getDiets createDiet getDietByID updateDiet deleteDiet
+// swagger:parameters getDiets createDiet
+type patientDietNoIDParams struct {
+	// Patient ID
+	// in:path
+	// required: true
+	PatientID uint `json:"patientId"`
+}
+
+// swagger:parameters getDietByID updateDiet deleteDiet
 type patientDietParams struct {
 	// Patient ID
 	// in:path
