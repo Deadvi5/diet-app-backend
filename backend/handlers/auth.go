@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"diet-app-backend/config"
+	"diet-app-backend/db"
 	"diet-app-backend/models"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -23,8 +24,12 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	expectedPassword, exists := models.Users[credentials.Username]
-	if !exists || expectedPassword != credentials.Password {
+	var dietist models.Dietist
+	if err := db.DB.Where("username = ?", credentials.Username).First(&dietist).Error; err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
+		return
+	}
+	if dietist.Password != credentials.Password {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
 		return
 	}

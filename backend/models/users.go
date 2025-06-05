@@ -6,7 +6,4 @@ type User struct {
 	Password string
 }
 
-var Users = map[string]string{
-	"dietista1": "password123",
-	"dietista2": "password456",
-}
+var Users = map[string]string{}
