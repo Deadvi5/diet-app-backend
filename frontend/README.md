@@ -15,6 +15,11 @@ npm run build     # crea i file di produzione
 Una volta buildato con `docker compose up --build`, il servizio `frontend` sarà
 disponibile su [http://localhost:3000](http://localhost:3000).
 
+### Routing lato client
+
+La configurazione di Nginx include la direttiva `try_files` per servire sempre `index.html`.
+In questo modo la navigazione tramite React Router funziona anche ricaricando manualmente la pagina.
+
 ## Cambiare tema
 
 Il tema predefinito è definito in `tailwind.config.js` nella sezione `daisyui` con il nome `mytheme`.
