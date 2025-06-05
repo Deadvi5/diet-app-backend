@@ -34,6 +34,14 @@ services:
       - db
       - migrate
 
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - app
+
   swagger-ui:
     image: swaggerapi/swagger-ui
     ports:
