@@ -14,3 +14,8 @@ npm run build     # crea i file di produzione
 
 Una volta buildato con `docker compose up --build`, il servizio `frontend` sarà
 disponibile su [http://localhost:3000](http://localhost:3000).
+
+## Cambiare tema
+
+Il tema predefinito è definito in `tailwind.config.js` nella sezione `daisyui` con il nome `mytheme`.
+Per applicare un tema differente modifica i colori in quel file e assicurati che il componente `Layout` utilizzi l'attributo `data-theme` corrispondente.

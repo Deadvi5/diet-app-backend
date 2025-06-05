@@ -3,22 +3,20 @@ import { AuthProvider } from './AuthContext'
 import Login from './pages/Login'
 import Patients from './pages/Patients'
 import PatientDiets from './pages/PatientDiets'
+import Layout from './Layout'
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-base-200">
-          <header className="p-4 bg-base-100 shadow mb-4">
-            <h1 className="text-2xl font-bold">DietApp</h1>
-          </header>
+        <Layout>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/patients" element={<Patients />} />
             <Route path="/patients/:id" element={<PatientDiets />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
-        </div>
+        </Layout>
       </BrowserRouter>
     </AuthProvider>
   )
