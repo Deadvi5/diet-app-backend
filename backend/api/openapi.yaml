@@ -1,298 +1,354 @@
-swagger: "2.0"
-host: localhost:8080   # Cambia in app:8080 quando usi Docker Compose
-basePath: /
-schemes:
-  - http
-
-securityDefinitions:
-  BearerAuth:
-    type: apiKey
-    name: Authorization
-    in: header
-
-security:
-  - BearerAuth: []
-
 definitions:
-  Diet:
-    properties:
-      created_at:
-        format: date-time
-        type: string
-        x-go-name: CreatedAt
-      description:
-        type: string
-        x-go-name: Description
-      id:
-        format: uint64
-        type: integer
-        x-go-name: ID
-      name:
-        type: string
-        x-go-name: Name
-      patient_id:
-        format: uint64
-        type: integer
-        x-go-name: PatientID
-    type: object
-    x-go-package: diet-app-backend/models
-  Patient:
-    properties:
-      created_at:
-        format: date-time
-        type: string
-        x-go-name: CreatedAt
-      diets:
-        description: |-
-          Diets holds all diets associated with the patient.
-          GORM will use PatientID as the foreign key by default, which matches
-          the Diet model's PatientID field.
-        items:
-          $ref: '#/definitions/Diet'
-        type: array
-        x-go-name: Diets
-      id:
-        format: uint64
-        type: integer
-        x-go-name: ID
-      name:
-        type: string
-        x-go-name: Name
-      username:
-        type: string
-        x-go-name: Username
-    type: object
-    x-go-package: diet-app-backend/models
-  User:
-    properties:
-      Password:
-        type: string
-      Username:
-        type: string
-    type: object
-    x-go-package: diet-app-backend/models
+    Diet:
+        properties:
+            created_at:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            description:
+                type: string
+                x-go-name: Description
+            id:
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                type: string
+                x-go-name: Name
+            patient_id:
+                format: uint64
+                type: integer
+                x-go-name: PatientID
+        type: object
+        x-go-package: diet-app-backend/models
+    Dietist:
+        properties:
+            created_at:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            id:
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                type: string
+                x-go-name: Name
+            password:
+                type: string
+                x-go-name: Password
+            username:
+                type: string
+                x-go-name: Username
+        type: object
+        x-go-package: diet-app-backend/models
+    Patient:
+        properties:
+            created_at:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            id:
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                type: string
+                x-go-name: Name
+            username:
+                type: string
+                x-go-name: Username
+        type: object
+        x-go-package: diet-app-backend/models
+    User:
+        properties:
+            Password:
+                type: string
+            Username:
+                type: string
+        type: object
+        x-go-package: diet-app-backend/models
 paths:
-  /api/v1/patients:
-    get:
-      operationId: getPatients
-      responses:
-        "200":
-          $ref: '#/responses/patientsResponse'
-      summary: Returns all patients.
-      tags:
-        - patients
-    post:
-      operationId: createPatient
-      responses:
-        "201":
-          $ref: '#/responses/patientResponse'
-      summary: Create a new patient.
-      tags:
-        - patients
-  /api/v1/patients/{patientId}:
-    delete:
-      operationId: deletePatient
-      parameters:
-        - format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-      responses:
-        "204":
-          description: ""
-      summary: Delete a patient.
-      tags:
-        - patients
-    get:
-      operationId: getPatientByID
-      parameters:
-        - format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-      responses:
-        "200":
-          $ref: '#/responses/patientResponse'
-      summary: Returns a patient by ID.
-      tags:
-        - patients
-    put:
-      operationId: updatePatient
-      parameters:
-        - format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-      responses:
-        "200":
-          $ref: '#/responses/patientResponse'
-      summary: Update an existing patient.
-      tags:
-        - patients
-  /api/v1/patients/{patientId}/diets:
-    get:
-      operationId: getDiets
-      parameters:
-        - description: Patient ID
-          format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
-      responses:
-        "200":
-          $ref: '#/responses/dietsResponse'
-      summary: Retrieve all diets for a patient.
-      tags:
-        - diets
-    post:
-      operationId: createDiet
-      parameters:
-        - description: Patient ID
-          format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
-      responses:
-        "201":
-          $ref: '#/responses/dietResponse'
-      summary: Create a new diet for a patient.
-      tags:
-        - diets
-  /api/v1/patients/{patientId}/diets/{id}:
-    delete:
-      operationId: deleteDiet
-      parameters:
-        - description: Patient ID
-          format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
-      responses:
-        "204":
-          description: ""
-      summary: Delete a diet.
-      tags:
-        - diets
-    get:
-      operationId: getDietByID
-      parameters:
-        - description: Patient ID
-          format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
-      responses:
-        "200":
-          $ref: '#/responses/dietResponse'
-      summary: Retrieve a diet by ID.
-      tags:
-        - diets
-    put:
-      operationId: updateDiet
-      parameters:
-        - description: Patient ID
-          format: uint64
-          in: path
-          name: patientId
-          required: true
-          type: integer
-          x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
-      responses:
-        "200":
-          $ref: '#/responses/dietResponse'
-      summary: Update an existing diet.
-      tags:
-        - diets
-  /login:
-    post:
-      security: []
-      operationId: login
-      parameters:
-        - in: body
-          name: Body
-          schema:
-            $ref: '#/definitions/User'
-      responses:
-        "200":
-          $ref: '#/responses/tokenResponse'
-      summary: Authenticate user and return JWT token.
-      tags:
-        - auth
+    /api/v1/dietists:
+        get:
+            operationId: getDietists
+            responses:
+                "200":
+                    $ref: '#/responses/dietistsResponse'
+            summary: Returns all dietists.
+            tags:
+                - dietists
+        post:
+            operationId: createDietist
+            responses:
+                "201":
+                    $ref: '#/responses/dietistResponse'
+            summary: Create a new dietist.
+            tags:
+                - dietists
+    /api/v1/dietists/{dietistId}:
+        delete:
+            operationId: deleteDietist
+            parameters:
+                - format: uint64
+                  in: path
+                  name: dietistId
+                  required: true
+                  type: integer
+                  x-go-name: DietistID
+            responses:
+                "204":
+                    description: ""
+            summary: Delete a dietist.
+            tags:
+                - dietists
+        get:
+            operationId: getDietistByID
+            parameters:
+                - format: uint64
+                  in: path
+                  name: dietistId
+                  required: true
+                  type: integer
+                  x-go-name: DietistID
+            responses:
+                "200":
+                    $ref: '#/responses/dietistResponse'
+            summary: Returns a dietist by ID.
+            tags:
+                - dietists
+        put:
+            operationId: updateDietist
+            parameters:
+                - format: uint64
+                  in: path
+                  name: dietistId
+                  required: true
+                  type: integer
+                  x-go-name: DietistID
+            responses:
+                "200":
+                    $ref: '#/responses/dietistResponse'
+            summary: Update an existing dietist.
+            tags:
+                - dietists
+    /api/v1/patients:
+        get:
+            operationId: getPatients
+            responses:
+                "200":
+                    $ref: '#/responses/patientsResponse'
+            summary: Returns all patients.
+            tags:
+                - patients
+        post:
+            operationId: createPatient
+            responses:
+                "201":
+                    $ref: '#/responses/patientResponse'
+            summary: Create a new patient.
+            tags:
+                - patients
+    /api/v1/patients/{patientId}:
+        delete:
+            operationId: deletePatient
+            parameters:
+                - format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+            responses:
+                "204":
+                    description: ""
+            summary: Delete a patient.
+            tags:
+                - patients
+        get:
+            operationId: getPatientByID
+            parameters:
+                - format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+            responses:
+                "200":
+                    $ref: '#/responses/patientResponse'
+            summary: Returns a patient by ID.
+            tags:
+                - patients
+        put:
+            operationId: updatePatient
+            parameters:
+                - format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+            responses:
+                "200":
+                    $ref: '#/responses/patientResponse'
+            summary: Update an existing patient.
+            tags:
+                - patients
+    /api/v1/patients/{patientId}/diets:
+        get:
+            operationId: getDiets
+            parameters:
+                - description: Patient ID
+                  format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+            responses:
+                "200":
+                    $ref: '#/responses/dietsResponse'
+            summary: Retrieve all diets for a patient.
+            tags:
+                - diets
+        post:
+            operationId: createDiet
+            parameters:
+                - description: Patient ID
+                  format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+            responses:
+                "201":
+                    $ref: '#/responses/dietResponse'
+            summary: Create a new diet for a patient.
+            tags:
+                - diets
+    /api/v1/patients/{patientId}/diets/{id}:
+        delete:
+            operationId: deleteDiet
+            parameters:
+                - description: Patient ID
+                  format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+                - description: Diet ID (for diet operations)
+                  format: uint64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            responses:
+                "204":
+                    description: ""
+            summary: Delete a diet.
+            tags:
+                - diets
+        get:
+            operationId: getDietByID
+            parameters:
+                - description: Patient ID
+                  format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+                - description: Diet ID (for diet operations)
+                  format: uint64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            responses:
+                "200":
+                    $ref: '#/responses/dietResponse'
+            summary: Retrieve a diet by ID.
+            tags:
+                - diets
+        put:
+            operationId: updateDiet
+            parameters:
+                - description: Patient ID
+                  format: uint64
+                  in: path
+                  name: patientId
+                  required: true
+                  type: integer
+                  x-go-name: PatientID
+                - description: Diet ID (for diet operations)
+                  format: uint64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            responses:
+                "200":
+                    $ref: '#/responses/dietResponse'
+            summary: Update an existing diet.
+            tags:
+                - diets
+    /login:
+        post:
+            operationId: login
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/User'
+            responses:
+                "200":
+                    $ref: '#/responses/tokenResponse'
+            summary: Authenticate user and return JWT token.
+            tags:
+                - auth
 responses:
-  dietResponse:
-    description: ""
-    schema:
-      $ref: '#/definitions/Diet'
-  dietsResponse:
-    description: ""
-    schema:
-      items:
-        $ref: '#/definitions/Diet'
-      type: array
-  patientResponse:
-    description: ""
-    schema:
-      $ref: '#/definitions/Patient'
-  patientsResponse:
-    description: ""
-    schema:
-      items:
-        $ref: '#/definitions/Patient'
-      type: array
-  tokenResponse:
-    description: ""
-    schema:
-      properties:
-        token:
-          type: string
-          x-go-name: Token
-      type: object
+    dietResponse:
+        description: ""
+        schema:
+            $ref: '#/definitions/Diet'
+    dietistResponse:
+        description: ""
+        schema:
+            $ref: '#/definitions/Dietist'
+    dietistsResponse:
+        description: ""
+        schema:
+            items:
+                $ref: '#/definitions/Dietist'
+            type: array
+    dietsResponse:
+        description: ""
+        schema:
+            items:
+                $ref: '#/definitions/Diet'
+            type: array
+    patientResponse:
+        description: ""
+        schema:
+            $ref: '#/definitions/Patient'
+    patientsResponse:
+        description: ""
+        schema:
+            items:
+                $ref: '#/definitions/Patient'
+            type: array
+    tokenResponse:
+        description: ""
+        schema:
+            properties:
+                token:
+                    type: string
+                    x-go-name: Token
+            type: object
+swagger: "2.0"

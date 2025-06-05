@@ -67,3 +67,22 @@ type dietsResponseWrapper struct {
 	// in:body
 	Body []models.Diet
 }
+
+// swagger:parameters getDietistByID updateDietist deleteDietist
+type dietistParams struct {
+	// in:path
+	// required: true
+	DietistID uint `json:"dietistId"`
+}
+
+// swagger:response dietistResponse
+type dietistResponseWrapper struct {
+	// in:body
+	Body models.Dietist
+}
+
+// swagger:response dietistsResponse
+type dietistsResponseWrapper struct {
+	// in:body
+	Body []models.Dietist
+}

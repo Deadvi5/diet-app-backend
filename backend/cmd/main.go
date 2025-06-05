@@ -26,6 +26,12 @@ func main() {
 	auth := router.Group("/api/v1")
 	auth.Use(middleware.JWTMiddleware())
 	{
+		auth.GET("/dietists", handlers.GetDietists)
+		auth.GET("/dietists/:dietistId", handlers.GetDietistByID)
+		auth.POST("/dietists", handlers.CreateDietist)
+		auth.PUT("/dietists/:dietistId", handlers.UpdateDietist)
+		auth.DELETE("/dietists/:dietistId", handlers.DeleteDietist)
+
 		auth.GET("/patients", handlers.GetPatients)
 		auth.GET("/patients/:patientId", handlers.GetPatientByID)
 		auth.POST("/patients", handlers.CreatePatient)
