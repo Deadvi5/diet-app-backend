@@ -11,11 +11,11 @@ export default function PatientDiets() {
   const [description, setDescription] = useState('')
 
   const fetchData = async () => {
-    const pRes = await fetch(`/api/v1/patients/${id}`, {
+    const pRes = await fetch(`http://localhost:8080/api/v1/patients/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     setPatient(await pRes.json())
-    const dRes = await fetch(`/api/v1/patients/${id}/diets`, {
+    const dRes = await fetch(`http://localhost:8080/api/v1/patients/${id}/diets`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     setDiets(await dRes.json())
@@ -25,7 +25,7 @@ export default function PatientDiets() {
 
   const createDiet = async (e) => {
     e.preventDefault()
-    await fetch(`/api/v1/patients/${id}/diets`, {
+    await fetch(`http://localhost:8080/api/v1/patients/${id}/diets`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function PatientDiets() {
   }
 
   const updateDiet = async (d) => {
-    await fetch(`/api/v1/patients/${id}/diets/${d.id}`, {
+    await fetch(`http://localhost:8080/api/v1/patients/${id}/diets/${d.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export default function PatientDiets() {
   }
 
   const deleteDiet = async (dietId) => {
-    await fetch(`/api/v1/patients/${id}/diets/${dietId}`, {
+    await fetch(`http://localhost:8080/api/v1/patients/${id}/diets/${dietId}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     })

@@ -11,7 +11,7 @@ export default function Patients() {
 
   const fetchPatients = async () => {
     try {
-      const res = await fetch('/api/v1/patients', {
+      const res = await fetch('http://localhost:8080/api/v1/patients', {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (!res.ok) throw new Error('Failed to load')
@@ -26,7 +26,7 @@ export default function Patients() {
   const createPatient = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch('/api/v1/patients', {
+      const res = await fetch('http://localhost:8080/api/v1/patients', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default function Patients() {
   }
 
   const deletePatient = async (id) => {
-    await fetch(`/api/v1/patients/${id}`, {
+    await fetch(`http://localhost:8080/api/v1/patients/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -52,7 +52,7 @@ export default function Patients() {
   }
 
   const updatePatient = async (p) => {
-    await fetch(`/api/v1/patients/${p.id}`, {
+    await fetch(`http://localhost:8080/api/v1/patients/${p.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
