@@ -146,13 +146,6 @@ paths:
           required: true
           type: integer
           x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
       responses:
         "200":
           $ref: '#/responses/dietsResponse'
@@ -169,13 +162,6 @@ paths:
           required: true
           type: integer
           x-go-name: PatientID
-        - description: Diet ID (for diet operations)
-          format: uint64
-          in: path
-          name: id
-          required: true
-          type: integer
-          x-go-name: ID
       responses:
         "201":
           $ref: '#/responses/dietResponse'
