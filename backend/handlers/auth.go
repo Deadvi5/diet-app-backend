@@ -36,8 +36,9 @@ func Login(c *gin.Context) {
 
 	// Creazione del token JWT
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": credentials.Username,
-		"exp":      time.Now().Add(time.Hour * 1).Unix(),
+		"username":   credentials.Username,
+		"dietist_id": dietist.ID,
+		"exp":        time.Now().Add(time.Hour * 1).Unix(),
 	})
 
 	tokenString, err := token.SignedString(config.JWTSecret)

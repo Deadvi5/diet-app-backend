@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"diet-app-backend/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -16,10 +17,15 @@ var jwtSecret = []byte("test-secret")
 // helper to create a token for tests
 func createTestToken() (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": "dietista1",
-		"exp":      time.Now().Add(time.Hour).Unix(),
+		"username":   "dietista1",
+		"dietist_id": 1,
+		"exp":        time.Now().Add(time.Hour).Unix(),
 	})
 	return token.SignedString(jwtSecret)
+}
+
+func init() {
+	config.JWTSecret = jwtSecret
 }
 
 func setupRouter() *gin.Engine {

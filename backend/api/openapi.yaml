@@ -52,6 +52,10 @@ definitions:
                 format: uint64
                 type: integer
                 x-go-name: ID
+            dietist_id:
+                format: uint64
+                type: integer
+                x-go-name: DietistID
             name:
                 type: string
                 x-go-name: Name

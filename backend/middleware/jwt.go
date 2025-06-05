@@ -45,6 +45,16 @@ func JWTMiddleware() gin.HandlerFunc {
 		}
 
 		c.Set("username", claims["username"])
+		if id, ok := claims["dietist_id"]; ok {
+			switch v := id.(type) {
+			case float64:
+				c.Set("dietist_id", uint(v))
+			case int:
+				c.Set("dietist_id", uint(v))
+			case uint:
+				c.Set("dietist_id", v)
+			}
+		}
 		c.Next()
 	}
 }
