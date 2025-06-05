@@ -2,7 +2,14 @@ import { createContext, useState, useEffect } from "react";
 
 function parseToken(tok) {
   try {
-    const payload = JSON.parse(atob(tok.split(".")[1]));
+    const segment = tok.split(".")[1];
+    const padded = segment.padEnd(
+      segment.length + ((4 - (segment.length % 4)) % 4),
+      "=",
+    );
+    const payload = JSON.parse(
+      atob(padded.replace(/-/g, "+").replace(/_/g, "/")),
+    );
     return payload.dietist_id || null;
   } catch {
     return null;
