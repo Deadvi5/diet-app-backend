@@ -84,18 +84,26 @@ export default function Patients() {
       {error && <div className="text-red-500">{error}</div>}
       <ul className="space-y-2">
         {patients.map((p) => (
-          <li key={p.id} className="border p-2 rounded">
+          <li key={p.id} className="card bg-base-100 shadow p-4">
             <div className="flex justify-between items-center">
               <div className="flex-1 space-x-2">
                 <input
-                  className="input input-sm"
+                  className="input input-bordered input-sm"
                   value={p.username}
-                  onChange={(e) => setPatients((prev) => prev.map((x) => x.id === p.id ? { ...x, username: e.target.value } : x))}
+                  onChange={(e) =>
+                    setPatients((prev) =>
+                      prev.map((x) => (x.id === p.id ? { ...x, username: e.target.value } : x))
+                    )
+                  }
                 />
                 <input
-                  className="input input-sm"
+                  className="input input-bordered input-sm"
                   value={p.name}
-                  onChange={(e) => setPatients((prev) => prev.map((x) => x.id === p.id ? { ...x, name: e.target.value } : x))}
+                  onChange={(e) =>
+                    setPatients((prev) =>
+                      prev.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x))
+                    )
+                  }
                 />
               </div>
               <div className="space-x-2">

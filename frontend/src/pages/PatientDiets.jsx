@@ -81,23 +81,31 @@ export default function PatientDiets() {
       </form>
       <ul className="space-y-2">
         {diets.map((d) => (
-          <li key={d.id} className="border p-2 rounded">
+          <li key={d.id} className="card bg-base-100 shadow p-4">
             <div className="flex justify-between items-center">
               <div className="flex-1 space-x-2">
                 <input
-                  className="input input-sm"
+                  className="input input-bordered input-sm"
                   value={d.name}
-                  onChange={(e) => setDiets((prev) => prev.map((x) => x.id === d.id ? { ...x, name: e.target.value } : x))}
+                  onChange={(e) =>
+                    setDiets((prev) => prev.map((x) => (x.id === d.id ? { ...x, name: e.target.value } : x)))
+                  }
                 />
                 <input
-                  className="input input-sm"
+                  className="input input-bordered input-sm"
                   value={d.description}
-                  onChange={(e) => setDiets((prev) => prev.map((x) => x.id === d.id ? { ...x, description: e.target.value } : x))}
+                  onChange={(e) =>
+                    setDiets((prev) =>
+                      prev.map((x) => (x.id === d.id ? { ...x, description: e.target.value } : x))
+                    )
+                  }
                 />
               </div>
               <div className="space-x-2">
                 <button className="btn btn-sm" onClick={() => updateDiet(d)}>Save</button>
-                <button className="btn btn-sm btn-error" onClick={() => deleteDiet(d.id)}>Delete</button>
+                <button className="btn btn-sm btn-error" onClick={() => deleteDiet(d.id)}>
+                  Delete
+                </button>
               </div>
             </div>
           </li>
