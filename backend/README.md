@@ -62,7 +62,6 @@ go run cmd/main.go
 - Keep your migration files under version control in db/migrations.
 - Never change the database schema directly in production—always use migrations!
 - To rollback the last migration:
-- 
 ```sh
 migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5432/dietappdb?sslmode=disable" down 1
 ```
@@ -71,7 +70,7 @@ migrate -path db/migrations -database "postgres://postgres:postgres@localhost:54
 
 - Start/stop database with Docker Compose:
 
-```shsh
+```sh
 docker compose up -d    # Start
 docker compose down     # Stop
 ```
