@@ -18,7 +18,7 @@ import (
 func GetPatients(c *gin.Context) {
 	var patients []models.Patient
 	// Preload diets so they are available on the patient model
-	if err := db.DB.Preload("Diets").Find(&patients).Error; err != nil {
+	if err := db.DB.Find(&patients).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch patients"})
 		return
 	}
@@ -35,7 +35,7 @@ func GetPatientByID(c *gin.Context) {
 	id := c.Param("patientId")
 	var patient models.Patient
 	// Preload diets so the returned patient includes them
-	if err := db.DB.Preload("Diets").First(&patient, id).Error; err != nil {
+	if err := db.DB.First(&patient, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
 		return
 	}
