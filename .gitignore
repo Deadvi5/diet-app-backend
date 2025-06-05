@@ -27,6 +27,7 @@ go.work.sum
 # idea
 .idea
 *.DS_store
+
 # Frontend
 /frontend/node_modules/
 /frontend/dist/
