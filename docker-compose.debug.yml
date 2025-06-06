@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  app-debug:
-    build:
-      context: .
-      dockerfile: debug.Dockerfile
-    ports:
-      - "40000:40000"
