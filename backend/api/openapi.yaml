@@ -1,3 +1,18 @@
+swagger: "2.0"
+host: localhost:8080
+basePath: /
+schemes:
+  - http
+
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+security:
+  - BearerAuth: []
+
 definitions:
     Diet:
         properties:
@@ -52,6 +67,10 @@ definitions:
                 format: uint64
                 type: integer
                 x-go-name: ID
+            dietist_id:
+                format: uint64
+                type: integer
+                x-go-name: DietistID
             name:
                 type: string
                 x-go-name: Name
@@ -351,4 +370,3 @@ responses:
                     type: string
                     x-go-name: Token
             type: object
-swagger: "2.0"

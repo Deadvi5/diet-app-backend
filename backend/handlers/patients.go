@@ -16,9 +16,9 @@ import (
 //
 //	200: patientsResponse
 func GetPatients(c *gin.Context) {
+	dietistID := c.GetUint("dietist_id")
 	var patients []models.Patient
-	// Preload diets so they are available on the patient model
-	if err := db.DB.Find(&patients).Error; err != nil {
+	if err := db.DB.Where("dietist_id = ?", dietistID).Find(&patients).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch patients"})
 		return
 	}
@@ -33,9 +33,9 @@ func GetPatients(c *gin.Context) {
 //	200: patientResponse
 func GetPatientByID(c *gin.Context) {
 	id := c.Param("patientId")
+	dietistID := c.GetUint("dietist_id")
 	var patient models.Patient
-	// Preload diets so the returned patient includes them
-	if err := db.DB.First(&patient, id).Error; err != nil {
+	if err := db.DB.Where("id = ? AND dietist_id = ?", id, dietistID).First(&patient).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
 		return
 	}
@@ -49,11 +49,13 @@ func GetPatientByID(c *gin.Context) {
 //
 //	201: patientResponse
 func CreatePatient(c *gin.Context) {
+	dietistID := c.GetUint("dietist_id")
 	var patient models.Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	patient.DietistID = dietistID
 	if err := db.DB.Create(&patient).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create patient"})
 		return
@@ -69,8 +71,9 @@ func CreatePatient(c *gin.Context) {
 //	200: patientResponse
 func UpdatePatient(c *gin.Context) {
 	id := c.Param("patientId")
+	dietistID := c.GetUint("dietist_id")
 	var patient models.Patient
-	if err := db.DB.First(&patient, id).Error; err != nil {
+	if err := db.DB.Where("id = ? AND dietist_id = ?", id, dietistID).First(&patient).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
 		return
 	}
@@ -78,6 +81,7 @@ func UpdatePatient(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	patient.DietistID = dietistID
 	if err := db.DB.Save(&patient).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update patient"})
 		return
@@ -93,10 +97,10 @@ func UpdatePatient(c *gin.Context) {
 //	204:
 func DeletePatient(c *gin.Context) {
 	id := c.Param("patientId")
+	dietistID := c.GetUint("dietist_id")
 
 	var patient models.Patient
-	// First, check if the patient exists
-	if err := db.DB.First(&patient, id).Error; err != nil {
+	if err := db.DB.Where("id = ? AND dietist_id = ?", id, dietistID).First(&patient).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Patient not found"})
 			return
@@ -104,8 +108,6 @@ func DeletePatient(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
 		return
 	}
-
-	// Delete the patient
 	if err := db.DB.Delete(&patient).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not delete patient"})
 		return

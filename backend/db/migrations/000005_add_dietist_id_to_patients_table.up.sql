@@ -1,0 +1,2 @@
+ALTER TABLE patients
+    ADD COLUMN dietist_id INT NOT NULL REFERENCES dietists(id) ON DELETE CASCADE;
