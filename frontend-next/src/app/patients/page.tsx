@@ -3,13 +3,27 @@ import { useContext, useEffect, useState, FormEvent } from 'react'
 import Link from 'next/link'
 import AuthContext from '@/context/AuthContext'
 
-type Patient = { id: number; username: string; name: string }
+type Patient = {
+  id: number
+  username: string
+  name: string
+  surname: string
+  email: string
+  age: number
+  height: number
+  weight: number
+}
 
 export default function Patients() {
   const { token, dietistId } = useContext(AuthContext)
   const [patients, setPatients] = useState<Patient[]>([])
   const [username, setUsername] = useState('')
   const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [email, setEmail] = useState('')
+  const [age, setAge] = useState(0)
+  const [height, setHeight] = useState(0)
+  const [weight, setWeight] = useState(0)
   const [error, setError] = useState<string | null>(null)
 
   const fetchPatients = async () => {
@@ -37,11 +51,25 @@ export default function Patients() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ username, name, dietist_id: dietistId }),
+        body: JSON.stringify({
+          username,
+          name,
+          surname,
+          email,
+          age,
+          height,
+          weight,
+          dietist_id: dietistId,
+        }),
       })
       if (!res.ok) throw new Error('Creation failed')
       setUsername('')
       setName('')
+      setSurname('')
+      setEmail('')
+      setAge(0)
+      setHeight(0)
+      setWeight(0)
       fetchPatients()
     } catch (err: any) {
       setError(err.message)
@@ -63,7 +91,16 @@ export default function Patients() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ username: p.username, name: p.name, dietist_id: dietistId }),
+      body: JSON.stringify({
+        username: p.username,
+        name: p.name,
+        surname: p.surname,
+        email: p.email,
+        age: p.age,
+        height: p.height,
+        weight: p.weight,
+        dietist_id: dietistId,
+      }),
     })
     fetchPatients()
   }
@@ -87,6 +124,39 @@ export default function Patients() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        <input
+          className="input input-bordered flex-1"
+          placeholder="Surname"
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
+        />
+        <input
+          className="input input-bordered flex-1"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="input input-bordered flex-1"
+          placeholder="Age"
+          type="number"
+          value={age}
+          onChange={(e) => setAge(Number(e.target.value))}
+        />
+        <input
+          className="input input-bordered flex-1"
+          placeholder="Height"
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(Number(e.target.value))}
+        />
+        <input
+          className="input input-bordered flex-1"
+          placeholder="Weight"
+          type="number"
+          value={weight}
+          onChange={(e) => setWeight(Number(e.target.value))}
+        />
         <button className="btn btn-primary" type="submit">
           Add
         </button>
@@ -98,6 +168,11 @@ export default function Patients() {
             <tr>
               <th>Username</th>
               <th>Name</th>
+              <th>Surname</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Height</th>
+              <th>Weight</th>
               <th></th>
             </tr>
           </thead>
@@ -122,6 +197,64 @@ export default function Patients() {
                     onChange={(e) =>
                       setPatients((prev) =>
                         prev.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={p.surname}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, surname: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={p.email}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, email: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    type="number"
+                    value={p.age}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, age: Number(e.target.value) } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    type="number"
+                    value={p.height}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, height: Number(e.target.value) } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    type="number"
+                    value={p.weight}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, weight: Number(e.target.value) } : x))
                       )
                     }
                   />

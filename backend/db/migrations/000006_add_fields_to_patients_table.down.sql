@@ -1,0 +1,6 @@
+ALTER TABLE patients
+    DROP COLUMN IF EXISTS weight,
+    DROP COLUMN IF EXISTS height,
+    DROP COLUMN IF EXISTS age,
+    DROP COLUMN IF EXISTS email,
+    DROP COLUMN IF EXISTS surname;
