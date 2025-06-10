@@ -1,18 +1,3 @@
-swagger: "2.0"
-host: localhost:8080
-basePath: /
-schemes:
-  - http
-
-securityDefinitions:
-  BearerAuth:
-    type: apiKey
-    name: Authorization
-    in: header
-
-security:
-  - BearerAuth: []
-
 definitions:
     Diet:
         properties:
@@ -42,19 +27,22 @@ definitions:
                 format: date-time
                 type: string
                 x-go-name: CreatedAt
+            email:
+                type: string
+                x-go-name: Email
+            first_name:
+                type: string
+                x-go-name: FirstName
             id:
                 format: uint64
                 type: integer
                 x-go-name: ID
-            name:
-                type: string
-                x-go-name: Name
             password:
                 type: string
                 x-go-name: Password
-            username:
+            surname:
                 type: string
-                x-go-name: Username
+                x-go-name: Surname
         type: object
         x-go-package: diet-app-backend/models
     Patient:
@@ -63,14 +51,19 @@ definitions:
                 format: date-time
                 type: string
                 x-go-name: CreatedAt
-            id:
-                format: uint64
-                type: integer
-                x-go-name: ID
             dietist_id:
                 format: uint64
                 type: integer
                 x-go-name: DietistID
+            diets:
+                items:
+                    $ref: '#/definitions/Diet'
+                type: array
+                x-go-name: Diets
+            id:
+                format: uint64
+                type: integer
+                x-go-name: ID
             name:
                 type: string
                 x-go-name: Name
@@ -81,9 +74,9 @@ definitions:
         x-go-package: diet-app-backend/models
     User:
         properties:
-            Password:
+            Email:
                 type: string
-            Username:
+            Password:
                 type: string
         type: object
         x-go-package: diet-app-backend/models
@@ -370,3 +363,4 @@ responses:
                     type: string
                     x-go-name: Token
             type: object
+swagger: "2.0"
