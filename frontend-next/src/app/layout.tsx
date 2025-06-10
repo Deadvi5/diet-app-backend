@@ -29,8 +29,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-200`}
       >
         <AuthProvider>
-          <header className="p-4 bg-base-100 shadow mb-4">
-            <h1 className="text-2xl font-bold">DietApp</h1>
+          <header className="shadow mb-4">
+            <div className="navbar bg-base-100">
+              <div className="flex-1">
+                <span className="text-xl font-bold">DietApp</span>
+              </div>
+            </div>
           </header>
           {children}
         </AuthProvider>

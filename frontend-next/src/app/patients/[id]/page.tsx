@@ -67,15 +67,18 @@ export default function PatientDiets() {
         Back
       </Link>
       <h2 className="text-xl font-bold mb-2">Diets for {patient.name}</h2>
-      <form onSubmit={createDiet} className="space-x-2">
+      <form
+        onSubmit={createDiet}
+        className="card bg-base-100 p-4 space-y-2 md:flex md:items-end md:space-y-0 md:space-x-2"
+      >
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -84,44 +87,55 @@ export default function PatientDiets() {
           Add
         </button>
       </form>
-      <ul className="space-y-2">
-        {diets.map((d) => (
-          <li key={d.id} className="card bg-base-100 shadow p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex-1 space-x-2">
-                <input
-                  className="input input-bordered input-sm"
-                  value={d.name}
-                  onChange={(e) =>
-                    setDiets((prev) =>
-                      prev.map((x) => (x.id === d.id ? { ...x, name: e.target.value } : x))
-                    )
-                  }
-                />
-                <input
-                  className="input input-bordered input-sm"
-                  value={d.description}
-                  onChange={(e) =>
-                    setDiets((prev) =>
-                      prev.map((x) =>
-                        x.id === d.id ? { ...x, description: e.target.value } : x
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {diets.map((d) => (
+              <tr key={d.id}>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={d.name}
+                    onChange={(e) =>
+                      setDiets((prev) =>
+                        prev.map((x) => (x.id === d.id ? { ...x, name: e.target.value } : x))
                       )
-                    )
-                  }
-                />
-              </div>
-              <div className="space-x-2">
-                <button className="btn btn-sm" onClick={() => updateDiet(d)}>
-                  Save
-                </button>
-                <button className="btn btn-sm btn-error" onClick={() => deleteDiet(d.id)}>
-                  Delete
-                </button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={d.description}
+                    onChange={(e) =>
+                      setDiets((prev) =>
+                        prev.map((x) =>
+                          x.id === d.id ? { ...x, description: e.target.value } : x
+                        )
+                      )
+                    }
+                  />
+                </td>
+                <td className="space-x-2">
+                  <button className="btn btn-sm" onClick={() => updateDiet(d)}>
+                    Save
+                  </button>
+                  <button className="btn btn-sm btn-error" onClick={() => deleteDiet(d.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
