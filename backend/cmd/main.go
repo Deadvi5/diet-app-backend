@@ -43,6 +43,11 @@ func main() {
 		auth.POST("/patients/:patientId/diets", handlers.CreateDiet)
 		auth.PUT("/patients/:patientId/diets/:id", handlers.UpdateDiet)
 		auth.DELETE("/patients/:patientId/diets/:id", handlers.DeleteDiet)
+
+		auth.GET("/diets/:dietId/dishes", handlers.GetDishes)
+		auth.POST("/diets/:dietId/dishes", handlers.CreateDish)
+		auth.PUT("/diets/:dietId/dishes/:id", handlers.UpdateDish)
+		auth.DELETE("/diets/:dietId/dishes/:id", handlers.DeleteDish)
 	}
 
 	router.Run(":8080")
