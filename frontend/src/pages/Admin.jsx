@@ -67,7 +67,10 @@ export default function Admin() {
   return (
     <div className="p-4 space-y-6">
       <h1 className="text-2xl font-bold">Dietists</h1>
-      <form onSubmit={createDietist} className="space-x-2">
+      <form
+        onSubmit={createDietist}
+        className="card bg-base-100 p-4 space-y-2 md:flex md:items-end md:space-y-0 md:space-x-2"
+      >
         <input
           className="input input-bordered"
           placeholder="Username"

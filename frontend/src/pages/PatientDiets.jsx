@@ -64,7 +64,10 @@ export default function PatientDiets() {
     <div className="p-4 space-y-6">
       <Link to="/patients" className="btn mb-4">Back</Link>
       <h2 className="text-xl font-bold mb-2">Diets for {patient.name}</h2>
-      <form onSubmit={createDiet} className="space-x-2">
+      <form
+        onSubmit={createDiet}
+        className="card bg-base-100 p-4 space-y-2 md:flex md:items-end md:space-y-0 md:space-x-2"
+      >
         <input
           className="input input-bordered"
           placeholder="Name"
