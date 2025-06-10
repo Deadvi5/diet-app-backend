@@ -68,6 +68,37 @@ type dietsResponseWrapper struct {
 	Body []models.Diet
 }
 
+// swagger:response dishResponse
+type dishResponseWrapper struct {
+	// in:body
+	Body models.Dish
+}
+
+// swagger:response dishesResponse
+type dishesResponseWrapper struct {
+	// in:body
+	Body []models.Dish
+}
+
+// swagger:parameters getDishes createDish
+type dietDishNoIDParams struct {
+	// Diet ID
+	// in:path
+	// required: true
+	DietID uint `json:"dietId"`
+}
+
+// swagger:parameters updateDish deleteDish
+type dietDishParams struct {
+	// Diet ID
+	// in:path
+	// required: true
+	DietID uint `json:"dietId"`
+	// Dish ID
+	// in:path
+	ID uint `json:"id"`
+}
+
 // swagger:parameters getDietistByID updateDietist deleteDietist
 type dietistParams struct {
 	// in:path
