@@ -72,74 +72,91 @@ export default function Admin() {
   return (
     <div className="p-4 space-y-6">
       <h1 className="text-2xl font-bold">Dietists</h1>
-      <form onSubmit={createDietist} className="space-x-2">
+      <form
+        onSubmit={createDietist}
+        className="card bg-base-100 p-4 space-y-2 md:flex md:items-end md:space-y-0 md:space-x-2"
+      >
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="btn btn-primary" type="submit">Add</button>
       </form>
-      {error && <div className="text-red-500">{error}</div>}
-      <ul className="space-y-2">
-        {dietists.map((d) => (
-          <li key={d.id} className="card bg-base-100 shadow p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex-1 space-x-2">
-                <input
-                  className="input input-bordered input-sm"
-                  value={d.username}
-                  onChange={(e) =>
-                    setDietists((prev) =>
-                      prev.map((x) => (x.id === d.id ? { ...x, username: e.target.value } : x))
-                    )
-                  }
-                />
-                <input
-                  className="input input-bordered input-sm"
-                  value={d.name}
-                  onChange={(e) =>
-                    setDietists((prev) =>
-                      prev.map((x) => (x.id === d.id ? { ...x, name: e.target.value } : x))
-                    )
-                  }
-                />
-                <input
-                  className="input input-bordered input-sm"
-                  type="password"
-                  value={d.password ?? ''}
-                  onChange={(e) =>
-                    setDietists((prev) =>
-                      prev.map((x) => (x.id === d.id ? { ...x, password: e.target.value } : x))
-                    )
-                  }
-                />
-              </div>
-              <div className="space-x-2">
-                <button className="btn btn-sm" onClick={() => updateDietist(d)}>
-                  Save
-                </button>
-                <button className="btn btn-sm btn-error" onClick={() => deleteDietist(d.id)}>
-                  Delete
-                </button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {error && <div className="alert alert-error">{error}</div>}
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Password</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {dietists.map((d) => (
+              <tr key={d.id}>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={d.username}
+                    onChange={(e) =>
+                      setDietists((prev) =>
+                        prev.map((x) => (x.id === d.id ? { ...x, username: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={d.name}
+                    onChange={(e) =>
+                      setDietists((prev) =>
+                        prev.map((x) => (x.id === d.id ? { ...x, name: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    type="password"
+                    value={d.password ?? ''}
+                    onChange={(e) =>
+                      setDietists((prev) =>
+                        prev.map((x) => (x.id === d.id ? { ...x, password: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td className="space-x-2">
+                  <button className="btn btn-sm" onClick={() => updateDietist(d)}>
+                    Save
+                  </button>
+                  <button className="btn btn-sm btn-error" onClick={() => deleteDietist(d.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

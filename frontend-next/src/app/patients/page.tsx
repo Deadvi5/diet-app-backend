@@ -71,15 +71,18 @@ export default function Patients() {
   return (
     <div className="p-4 space-y-6">
       <h1 className="text-2xl font-bold">Patients</h1>
-      <form onSubmit={createPatient} className="space-x-2">
+      <form
+        onSubmit={createPatient}
+        className="card bg-base-100 p-4 space-y-2 md:flex md:items-end md:space-y-0 md:space-x-2"
+      >
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          className="input input-bordered"
+          className="input input-bordered flex-1"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -88,46 +91,57 @@ export default function Patients() {
           Add
         </button>
       </form>
-      {error && <div className="text-red-500">{error}</div>}
-      <ul className="space-y-2">
-        {patients.map((p) => (
-          <li key={p.id} className="card bg-base-100 shadow p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex-1 space-x-2">
-                <input
-                  className="input input-bordered input-sm"
-                  value={p.username}
-                  onChange={(e) =>
-                    setPatients((prev) =>
-                      prev.map((x) => (x.id === p.id ? { ...x, username: e.target.value } : x))
-                    )
-                  }
-                />
-                <input
-                  className="input input-bordered input-sm"
-                  value={p.name}
-                  onChange={(e) =>
-                    setPatients((prev) =>
-                      prev.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x))
-                    )
-                  }
-                />
-              </div>
-              <div className="space-x-2">
-                <button className="btn btn-sm" onClick={() => updatePatient(p)}>
-                  Save
-                </button>
-                <button className="btn btn-sm btn-error" onClick={() => deletePatient(p.id)}>
-                  Delete
-                </button>
-                <Link className="btn btn-sm btn-secondary" href={`/patients/${p.id}`}>
-                  Diets
-                </Link>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {error && <div className="alert alert-error">{error}</div>}
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {patients.map((p) => (
+              <tr key={p.id}>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={p.username}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, username: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className="input input-bordered input-sm w-full"
+                    value={p.name}
+                    onChange={(e) =>
+                      setPatients((prev) =>
+                        prev.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x))
+                      )
+                    }
+                  />
+                </td>
+                <td className="space-x-2">
+                  <button className="btn btn-sm" onClick={() => updatePatient(p)}>
+                    Save
+                  </button>
+                  <button className="btn btn-sm btn-error" onClick={() => deletePatient(p.id)}>
+                    Delete
+                  </button>
+                  <Link className="btn btn-sm btn-secondary" href={`/patients/${p.id}`}>
+                    Diets
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

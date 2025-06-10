@@ -29,27 +29,29 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 w-64">
-        <input
-          className="input input-bordered w-full"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          className="input input-bordered w-full"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <div className="text-red-500">{error}</div>}
-        <button className="btn btn-primary w-full" type="submit">
-          Login
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+      <div className="card w-96 bg-base-100 shadow">
+        <form onSubmit={handleSubmit} className="card-body space-y-4">
+          <h1 className="card-title">Login</h1>
+          <input
+            className="input input-bordered w-full"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            className="input input-bordered w-full"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && <div className="alert alert-error py-1 text-sm">{error}</div>}
+          <button className="btn btn-primary w-full" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
