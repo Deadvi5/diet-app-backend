@@ -25,7 +25,7 @@ func Login(c *gin.Context) {
 	}
 
 	var dietist models.Dietist
-	if err := db.DB.Where("username = ?", credentials.Username).First(&dietist).Error; err != nil {
+	if err := db.DB.Where("email = ?", credentials.Email).First(&dietist).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
 		return
 	}
@@ -36,7 +36,7 @@ func Login(c *gin.Context) {
 
 	// Creazione del token JWT
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username":   credentials.Username,
+		"email":      dietist.Email,
 		"dietist_id": dietist.ID,
 		"exp":        time.Now().Add(time.Hour * 1).Unix(),
 	})

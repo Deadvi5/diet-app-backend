@@ -1,0 +1,8 @@
+ALTER TABLE dietists
+    ADD COLUMN first_name TEXT NOT NULL,
+    ADD COLUMN surname TEXT NOT NULL,
+    ADD COLUMN email TEXT NOT NULL UNIQUE;
+
+ALTER TABLE dietists
+    DROP COLUMN IF EXISTS username,
+    DROP COLUMN IF EXISTS name;
