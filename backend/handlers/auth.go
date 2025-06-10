@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"diet-app-backend/config"
-       "diet-app-backend/db"
-       "diet-app-backend/models"
-       "github.com/gin-gonic/gin"
-       "github.com/golang-jwt/jwt/v5"
-       "golang.org/x/crypto/bcrypt"
+	"diet-app-backend/db"
+	"diet-app-backend/models"
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // swagger:route POST /login auth login
@@ -26,14 +26,14 @@ func Login(c *gin.Context) {
 	}
 
 	var dietist models.Dietist
-	if err := db.DB.Where("email = ?", credentials.Email).First(&dietist).Error; err != nil {
+	if err := db.DB.Where("email = ?", credentials.Username).First(&dietist).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
 		return
 	}
-       if bcrypt.CompareHashAndPassword([]byte(dietist.Password), []byte(credentials.Password)) != nil {
-               c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
-               return
-       }
+	if bcrypt.CompareHashAndPassword([]byte(dietist.Password), []byte(credentials.Password)) != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenziali non valide"})
+		return
+	}
 
 	// Creazione del token JWT
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
