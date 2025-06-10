@@ -9,11 +9,12 @@ import (
 	"testing"
 
 	"diet-app-backend/config"
-	"diet-app-backend/db"
-	"diet-app-backend/middleware"
-	"diet-app-backend/models"
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
+       "diet-app-backend/db"
+       "diet-app-backend/middleware"
+       "diet-app-backend/models"
+       "golang.org/x/crypto/bcrypt"
+       "github.com/gin-gonic/gin"
+       "github.com/golang-jwt/jwt/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -55,8 +56,10 @@ func TestDietistCannotAccessOthersPatients(t *testing.T) {
 	config.JWTSecret = []byte("test")
 	setupTestDB(t)
 
-	d1 := models.Dietist{Username: "d1", Name: "A"}
-	d2 := models.Dietist{Username: "d2", Name: "B"}
+       h1, _ := bcrypt.GenerateFromPassword([]byte("pass1"), bcrypt.DefaultCost)
+       h2, _ := bcrypt.GenerateFromPassword([]byte("pass2"), bcrypt.DefaultCost)
+       d1 := models.Dietist{Username: "d1", Name: "A", Password: string(h1)}
+       d2 := models.Dietist{Username: "d2", Name: "B", Password: string(h2)}
 	db.DB.Create(&d1)
 	db.DB.Create(&d2)
 	p1 := models.Patient{Username: "p1", Name: "P1", DietistID: d1.ID}
