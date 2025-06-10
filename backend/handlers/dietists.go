@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"diet-app-backend/db"
-	"diet-app-backend/models"
-	"github.com/gin-gonic/gin"
-	"net/http"
+        "diet-app-backend/db"
+        "diet-app-backend/models"
+        "github.com/gin-gonic/gin"
+        "golang.org/x/crypto/bcrypt"
+        "net/http"
 )
 
 // swagger:route GET /api/v1/dietists dietists getDietists
@@ -45,16 +46,22 @@ func GetDietistByID(c *gin.Context) {
 //
 //	201: dietistResponse
 func CreateDietist(c *gin.Context) {
-	var dietist models.Dietist
-	if err := c.ShouldBindJSON(&dietist); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	if err := db.DB.Create(&dietist).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create dietist"})
-		return
-	}
-	c.JSON(http.StatusCreated, dietist)
+        var dietist models.Dietist
+        if err := c.ShouldBindJSON(&dietist); err != nil {
+                c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+                return
+        }
+       hashed, err := bcrypt.GenerateFromPassword([]byte(dietist.Password), bcrypt.DefaultCost)
+       if err != nil {
+               c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not hash password"})
+               return
+       }
+       dietist.Password = string(hashed)
+        if err := db.DB.Create(&dietist).Error; err != nil {
+                c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create dietist"})
+                return
+        }
+        c.JSON(http.StatusCreated, dietist)
 }
 
 // swagger:route PUT /api/v1/dietists/{dietistId} dietists updateDietist
@@ -70,14 +77,22 @@ func UpdateDietist(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Dietist not found"})
 		return
 	}
-	if err := c.ShouldBindJSON(&dietist); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	if err := db.DB.Save(&dietist).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update dietist"})
-		return
-	}
+       if err := c.ShouldBindJSON(&dietist); err != nil {
+               c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+               return
+       }
+       if dietist.Password != "" {
+               hashed, err := bcrypt.GenerateFromPassword([]byte(dietist.Password), bcrypt.DefaultCost)
+               if err != nil {
+                       c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not hash password"})
+                       return
+               }
+               dietist.Password = string(hashed)
+       }
+       if err := db.DB.Save(&dietist).Error; err != nil {
+               c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update dietist"})
+               return
+       }
 	c.JSON(http.StatusOK, dietist)
 }
 
